@@ -1,0 +1,82 @@
+package main
+
+import (
+	"crypto/md5"
+	"crypto/sha1"
+	"crypto/sha256"
+	"crypto/sha512"
+	"encoding/hex"
+	"fmt"
+	"golang.org/x/crypto/sha3"
+)
+
+func main() {
+	var input1, input2 string
+
+	fmt.Println("======== Name + Hashing Program ========")
+	fmt.Print("Please input value 1: ")
+	fmt.Scanln(&input1)
+	fmt.Print("Please input value 2: ")
+	fmt.Scanln(&input2)
+
+	proofMe(input1, input2)
+}
+
+func proofMe(txt1, txt2 string) {
+	fmt.Println("\nLab #0: Proof the Hash Program")
+
+	// MD5
+	hashMD5_A := hashMD5(txt1)
+	hashMD5_B := hashMD5(txt2)
+	fmt.Println("Hash (MD5):")
+	fmt.Println(" Output A =", hashMD5_A)
+	fmt.Println(" Output B =", hashMD5_B)
+	printMatch(hashMD5_A, hashMD5_B)
+
+	// SHA1
+	hashSHA1_A := hashSHA1(txt1)
+	hashSHA1_B := hashSHA1(txt2)
+	fmt.Println("Hash (SHA1):")
+	fmt.Println(" Output A =", hashSHA1_A)
+	fmt.Println(" Output B =", hashSHA1_B)
+	printMatch(hashSHA1_A, hashSHA1_B)
+
+	// SHA256
+	hashSHA256_A := hashSHA256(txt1)
+	hashSHA256_B := hashSHA256(txt2)
+	fmt.Println("Hash (SHA256):")
+	fmt.Println(" Output A =", hashSHA256_A)
+	fmt.Println(" Output B =", hashSHA256_B)
+	printMatch(hashSHA256_A, hashSHA256_B)
+
+	// SHA512
+	hashSHA512_A := hashSHA512(txt1)
+	hashSHA512_B := hashSHA512(txt2)
+	fmt.Println("Hash (SHA512):")
+	fmt.Println(" Output A =", hashSHA512_A)
+	fmt.Println(" Output B =", hashSHA512_B)
+	printMatch(hashSHA512_A, hashSHA512_B)
+
+	// SHA3-256
+	hashSHA3_A := hashSHA3(txt1)
+	hashSHA3_B := hashSHA3(txt2)
+	fmt.Println("Hash (SHA3-256):")
+	fmt.Println(" Output A =", hashSHA3_A)
+	fmt.Println(" Output B =", hashSHA3_B)
+	printMatch(hashSHA3_A, hashSHA3_B)
+}
+
+func printMatch(a, b string) {
+	if a == b {
+		fmt.Println(" => Match!\n")
+	} else {
+		fmt.Println(" => No Match!\n")
+	}
+}
+
+// Hashing functions
+func hashMD5(s string) string {
+	h := md5.Sum([]byte(s))
+	return hex.EncodeToString(h[:])
+}
+
